@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from app_Coffee_Web_Shop import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('shop/', views.shop, name="shop"),
+    path('product_detail/', views.product_detail, name="product_detail"),
 ]
