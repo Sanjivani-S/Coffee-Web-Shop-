@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+Coffee_Web_Shop/Coffee_Web_Shop/__pycache__/
+Coffee_Web_Shop/app_Coffee_Web_Shop/__pycache__/
 *.py[cod]
 *$py.class
 
