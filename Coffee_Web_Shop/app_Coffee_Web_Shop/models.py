@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -12,10 +13,16 @@ class Product(models.Model):
     def __str__(self) -> str:
         return "({}) {}".format(self.product_id, self.name)
     
+class Customer(models.Model):
+    user = models.OneToOneField(User)
+      
+    def __str__(self) -> str:
+        return self.user.username
+    
 #Order table - contains order_ID(primary key), user_ID(foreign key-Order_Details table), order_date, total_price
 class Orders(models.Model):
     order_id = models.AutoField(primary_key = True)
-    user_id = models.ForeignKey(Order_Details, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_date = models.DateTimeField()
     total_price = models.DecimalField()
 
@@ -31,4 +38,6 @@ class Order_Details(models.Model):
 
     def __str__(self) -> str :
         return self.o_details_id
+
+
 
