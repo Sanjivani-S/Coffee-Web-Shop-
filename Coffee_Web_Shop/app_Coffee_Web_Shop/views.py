@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
+from app_Coffee_Web_Shop.registration_form import RegistrationForm
 from django.urls import reverse
 import random
-
 from .models import Product
 
 # Create your views here.
@@ -37,6 +38,31 @@ def product_detail(request, id):
         related_items = related_items[:3]
 
     return render(request, 'product_detail.html', {'product': display_product, 'related_items': related_items})
+
+def register(request):
+    registered = False
+
+    if request.method == 'POST':
+        regform = RegistrationForm(request.POST)
+        
+
+        if regform.is_valid():
+            user = regform.save()
+            user.set_password(user.password)
+            user.save()
+            
+
+            registered = True
+
+        else:
+            print(regform.errors)
+
+    else:
+        regform = RegistrationForm()
+
+    return render(request,'registration.html',
+                    {'regform':regform,
+                     'registered':registered})
 
 def error(request):
     return render(request, 'error.html')

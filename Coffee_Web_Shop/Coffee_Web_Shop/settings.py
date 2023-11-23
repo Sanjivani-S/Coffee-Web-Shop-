@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_Coffee_Web_Shop'
+    'app_Coffee_Web_Shop',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -132,4 +133,6 @@ MEDIA_ROOT = BASE_DIR / 'app_Coffee_Web_Shop/static/img'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Crispy setting
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
 CRISPY_TEMPLATE_PACK='bootstrap4'
