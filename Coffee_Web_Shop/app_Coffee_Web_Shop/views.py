@@ -5,6 +5,13 @@ from django.urls import reverse
 import random
 from .models import Product
 
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+
+from django.contrib import messages
+
 # Create your views here.
 
 def shop(request):
@@ -15,6 +22,33 @@ def shop(request):
         display_products.append({'id': p.pk, 'name': p.name, 'img': "img/" + p.img.url, 'price': str(p.price).replace(".", ":")})
     return render(request, 'shop.html', {'products': display_products})
 
+def user_login(request):
+    msg = 'not_logged_in'
+
+    if request.method == 'POST':
+        username = request.POST.get ('username')
+        password = request.POST.get ('password')
+
+        user = authenticate(username=username,password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('shop'))
+            else:
+                return HttpResponse("Your account is not active")
+        else:
+            print("User with Username: {} and Password {} failed to login".format(username, password))
+            msg = 'login_failed'
+            return render (request, 'login.html', {'msg': msg} )
+    else:
+        return render (request, 'login.html' ,{'msg': msg})    
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('shop'))
+  
 def product_detail(request, id):
     #If a non-existing id is supplied, go to the error page instead
     try:
