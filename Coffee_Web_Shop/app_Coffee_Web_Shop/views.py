@@ -8,6 +8,7 @@ from .models import Product
 
 def shop(request):
     products = Product.objects.order_by('nr_available')
+    print(products)
     display_products = []
     for p in products:
         display_products.append({'id': p.pk, 'name': p.name, 'img': "img/" + p.img.url, 'price': str(p.price).replace(".", ":")})
