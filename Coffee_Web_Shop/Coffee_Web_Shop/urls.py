@@ -21,7 +21,9 @@ from app_Coffee_Web_Shop import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', views.shop, name="shop"),
-    path('product_detail/', views.product_detail, name="product_detail"),
     path('user_login/',views.user_login, name = 'user_login'),
     path ('user_logout/', views.user_logout, name = "user_logout"),
+    path('register/', views.register, name="register")
+    path('error/', views.error, name="error"),
+    path('product_detail/<int:id>/', views.product_detail, name="product_detail"),
 ]

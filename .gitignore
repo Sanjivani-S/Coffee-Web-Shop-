@@ -1,7 +1,20 @@
 # Byte-compiled / optimized / DLL files
-*__pycache__/
+*/__pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+
+#
+Coffee_Web_Shop/Coffee_Web_Shop/__pycache__/__init__.cpython-312.pyc
+Coffee_Web_Shop/Coffee_Web_Shop/__pycache__/settings.cpython-312.pyc
+Coffee_Web_Shop/Coffee_Web_Shop/__pycache__/urls.cpython-312.pyc
+Coffee_Web_Shop/Coffee_Web_Shop/__pycache__/wsgi.cpython-312.pyc
+Coffee_Web_Shop/app_Coffee_Web_Shop/__pycache__/__init__.cpython-312.pyc
+Coffee_Web_Shop/app_Coffee_Web_Shop/__pycache__/admin.cpython-312.pyc
+Coffee_Web_Shop/app_Coffee_Web_Shop/__pycache__/apps.cpython-312.pyc
+Coffee_Web_Shop/app_Coffee_Web_Shop/__pycache__/models.cpython-312.pyc
+Coffee_Web_Shop/app_Coffee_Web_Shop/__pycache__/views.cpython-312.pyc
+Coffee_Web_Shop/app_Coffee_Web_Shop/migrations/__pycache__/__init__.cpython-312.pyc
 
 # C extensions
 *.so

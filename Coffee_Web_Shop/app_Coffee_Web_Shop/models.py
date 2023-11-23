@@ -22,7 +22,7 @@ class Customer(models.Model):
 #Order table - contains order_ID(primary key), user_ID(foreign key-Order_Details table), order_date, total_price
 class Order(models.Model):
     order_id = models.AutoField(primary_key = True)
-    user_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     order_date = models.DateTimeField()
     total_price = models.DecimalField(max_digits=7, decimal_places=2)
     
