@@ -56,7 +56,7 @@ def product_detail(request, id):
         product = None
         return render(request, 'error.html')
     
-    display_product = {'id': product.pk, 'name': product.name, 'img': "img/" + product.img.url, 'price': str(product.price).replace(".", ":")}
+    display_product = {'id': product.pk, 'name': product.name, 'img': "img/" + product.img.url, 'price': str(product.price).replace(".", ":"), 'description': product.description}
 
     #Other "similar products"
     products = Product.objects.order_by('nr_available')
@@ -68,7 +68,7 @@ def product_detail(request, id):
     random.shuffle(related_items)
 
     if len(related_items) > 4:
-        related_items = related_items[:3]
+        related_items = related_items[:4]
 
     return render(request, 'product_detail.html', {'product': display_product, 'related_items': related_items})
 

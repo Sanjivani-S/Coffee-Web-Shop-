@@ -74,7 +74,7 @@ footer {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     margin: 0;
     font-family: inherit;
-    /*background-color: rgb(232, 240, 254) !important;*/
+    background-color: rgb(232, 240, 254) !important;
     color: #212529 !important;
     background-image: none !important;
 }
