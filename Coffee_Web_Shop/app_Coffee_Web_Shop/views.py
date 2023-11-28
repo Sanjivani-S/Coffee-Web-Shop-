@@ -5,13 +5,8 @@ from django.urls import reverse
 import random
 from .models import Product
 from .cart import Cart
-
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-
-from django.contrib import messages
 
 # Create your views here.
 
@@ -21,6 +16,15 @@ def shop(request):
     for p in products:
         display_products.append({'id': p.pk, 'name': p.name, 'img': "img/" + p.img.url, 'price': str(p.price).replace(".", ":")})
     return render(request, 'shop.html', {'products': display_products})
+
+
+#def search(request):
+#    products = Product.objects.filter(name__contains=search_query)
+#    display_products = []
+#    for p in products:
+#        display_products.append({'id': p.pk, 'name': p.name, 'img': "img/" + p.img.url, 'price': str(p.price).replace(".", ":")})
+#    return render(request, 'shop.html', {'products': display_products})
+
 
 def user_login(request):
     msg = 'not_logged_in'
@@ -57,7 +61,7 @@ def product_detail(request, id):
         product = None
         return render(request, 'error.html')
     
-    display_product = {'id': product.pk, 'name': product.name, 'img': "img/" + product.img.url, 'price': str(product.price).replace(".", ":")}
+    display_product = {'id': product.pk, 'name': product.name, 'img': "img/" + product.img.url, 'price': str(product.price).replace(".", ":"), 'description': product.description}
 
     #Other "similar products"
     products = Product.objects.order_by('nr_available')
@@ -69,7 +73,7 @@ def product_detail(request, id):
     random.shuffle(related_items)
 
     if len(related_items) > 4:
-        related_items = related_items[:3]
+        related_items = related_items[:4]
 
     return render(request, 'product_detail.html', {'product': display_product, 'related_items': related_items})
 
@@ -100,9 +104,6 @@ def register(request):
 
 def error(request):
     return render(request, 'error.html')
-
-
-
 
 def cart_add(request):
     cart = Cart(request)
