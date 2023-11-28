@@ -1,0 +1,115 @@
+.page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content-wrap {
+    padding-bottom: 3.5rem;    /* Footer height */
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.general-form {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    max-width: 500px;
+}
+
+.register_center{
+    position: relative;
+    height: 80vh;
+    height: calc(100vh - 7rem);
+}
+
+.register_center h3 {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
+}
+
+.errorlist li{
+    list-style-type: none;
+    color: red;
+    font-size: 10px;
+}
+
+.helptext{
+    color: grey;
+    font-size: 10px;
+}
+
+.general-form p {
+    margin-block-start: 0;
+    margin-block-end: 0 !important;
+    margin-bottom: 1rem !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.general-form label {
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.login-form-control, .general-form input[type=text], .general-form input[type=email], .general-form input[type=password] {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin: 0;
+    font-family: inherit;
+    /*background-color: rgb(232, 240, 254) !important;*/
+    color: #212529 !important;
+    background-image: none !important;
+}
+
+.login-form-control:focus-visible, 
+.general-form input[type=text]:focus-visible, 
+.general-form input[type=email]:focus-visible, 
+.general-form input[type=password]:focus-visible,
+.login-form-control:focus, 
+.general-form input[type=text]:focus, 
+.general-form input[type=email]:focus, 
+.general-form input[type=password]:focus,
+.login-form-control:active, 
+.general-form input[type=text]:active, 
+.general-form input[type=email]:active, 
+.general-form input[type=password]:active,
+.general-form input[type=text]:target, 
+.general-form input[type=email]:target, 
+.general-form input[type=password]:target,
+.general-form input[type=text]:focus-within, 
+.general-form input[type=email]:focus-within, 
+.general-form input[type=password]:focus-within {
+    border-color: #0d4533;
+    outline: none;
+}
+
+.nav-link {
+    font-weight: 400;
+}
+
+.cart-btn:hover .rounded-pill, .cart-btn:active .rounded-pill {
+    background-color: #0d4533 !important;
+    color: #fff !important;
+}
+
+.cart-btn:hover i, .cart-btn:active i {
+    color: #0d4533 !important;
+}
