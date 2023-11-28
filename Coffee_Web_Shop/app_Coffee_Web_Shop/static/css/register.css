@@ -15,3 +15,11 @@
     color: grey;
     font-size: 10px;
 }
+
+.total_right{
+    text-align: right;
+}
+
+.sum_right{
+    text-align: right;
+}
