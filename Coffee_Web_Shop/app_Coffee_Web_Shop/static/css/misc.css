@@ -74,7 +74,7 @@ footer {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     margin: 0;
     font-family: inherit;
-    background-color: rgb(232, 240, 254) !important;
+    background-color: rgb(232, 240, 254) !important;    /*Bug*/
     color: #212529 !important;
     background-image: none !important;
 }
@@ -113,3 +113,15 @@ footer {
 .cart-btn:hover i, .cart-btn:active i {
     color: #0d4533 !important;
 }
+
+.search-padding {
+    padding: 0 0 1rem 0;
+    max-width: 500px;
+}
+
+@media(screen) and (min-width: 992px) {
+    .search-padding {
+        padding: 0 1rem 0 1rem;
+    }
+}
+

@@ -21,6 +21,14 @@ def shop(request):
         display_products.append({'id': p.pk, 'name': p.name, 'img': "img/" + p.img.url, 'price': str(p.price).replace(".", ":")})
     return render(request, 'shop.html', {'products': display_products})
 
+def search(request):
+    products = Product.objects.filter(name__contains=search_query)
+    display_products = []
+    for p in products:
+        display_products.append({'id': p.pk, 'name': p.name, 'img': "img/" + p.img.url, 'price': str(p.price).replace(".", ":")})
+    return render(request, 'shop.html', {'products': display_products})
+
+
 def user_login(request):
     msg = 'not_logged_in'
 
