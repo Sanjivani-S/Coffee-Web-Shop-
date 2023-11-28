@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from app_Coffee_Web_Shop.registration_form import RegistrationForm
 from django.urls import reverse
 import random
 from .models import Product
+from .cart import Cart
 
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -99,3 +100,41 @@ def register(request):
 
 def error(request):
     return render(request, 'error.html')
+
+
+
+
+def cart_add(request):
+    cart = Cart(request)
+    if request.POST.get('action') =='post':
+        product_id = int(request.POST.get('product_id'))
+        product = get_object_or_404(Product, product_id=product_id)
+        cart.add(product=product)
+        
+        cart_quantity = cart.__len__()
+        response = JsonResponse({'qty:':cart_quantity})
+        #response = JsonResponse({'Product Name:':product.name})
+        return response
+    
+def cart_summary(request):
+    cart = Cart(request)
+    items = cart.item()
+    product_list = []
+    item_list = []
+    total = 0
+    product = Product.objects.all()
+
+    for x in items:
+        product_list.append(*items[x].values())
+    for p in product:
+        if p.name in product_list:
+           item_list.append({'name':p.name,'img':p.img.url,'price':str(p.price).replace(".", ":")})
+           total=total+p.price
+          
+    return render(request,'cart_summary.html',{'items':item_list,'total':total})
+
+def cart_delete(request):
+    pass
+
+def cart_update(request):
+    pass
