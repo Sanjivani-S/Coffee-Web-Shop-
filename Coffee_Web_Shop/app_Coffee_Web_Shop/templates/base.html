@@ -20,8 +20,8 @@
         <div class="content-wrap">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="{% url 'shop' %}"><img src="{% static "img/LOGO.png" %}" width="80px" height="80px"></a> 
-                
+                <a class="navbar-brand" href="{% url 'shop' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" height="24" width="24"><path fill="#fff" d="M3.51 101.94c3.04-3.78 7.63-5.99 12.48-5.99h416.12c8.84 0 16 7.17 16 16.01l-.38 3.45-7.04 31.72c51.26 13.69 81.71 66.33 68.03 117.59-12.87 48.21-60.51 78.54-109.64 69.79l-4.23 18.89c-8.14 36.6-40.61 62.64-78.1 62.64h-185.4c-37.5-.01-69.97-26.06-78.1-62.67L.37 115.41c-1.04-4.73.11-9.67 3.14-13.44v-.03zM406 303.21c34.88 5.77 67.84-17.84 73.6-52.72 5.33-32.21-14.44-63.27-45.88-72.09L406 303.25v-.04zM35.97 127.96 84.5 346.42c4.88 21.97 24.36 37.61 46.86 37.61h185.4c22.5-.01 41.99-15.64 46.86-37.61l48.56-218.46H35.93h.04z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg>                </a> 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -37,10 +37,10 @@
                         {% endif %}
                        
                     </ul>
-                    <form class="d-flex search-padding" role="search">
+                    <!--<form class="d-flex search-padding" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
                         <button class="btn btn-outline-light" type="submit">Search</button>
-                      </form>
+                      </form>-->
                     <form class="d-flex">
                         <a href="{% url 'cart_summary'%}" class="btn btn-outline-light cart-btn" type="submit">
                             <i class="bi-cart-fill me-1"></i>

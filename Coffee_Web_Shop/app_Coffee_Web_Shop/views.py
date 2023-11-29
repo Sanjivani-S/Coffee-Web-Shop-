@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from app_Coffee_Web_Shop.registration_form import RegistrationForm
 from django.urls import reverse
-import random
-from .models import Product
+import random, datetime
+from .models import Product, Order, Order_Detail
 from .cart import Cart
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -103,7 +103,7 @@ def register(request):
                      'registered':registered})
 
 def error(request):
-    return render(request, 'error.html')
+    return render(request, 'error.html', {'error_code': "404", 'error_description': "Page not found.", "lead_text": "The page you’re looking for doesn’t exist."})
 
 def cart_add(request):
     cart = Cart(request)
@@ -153,3 +153,83 @@ def cart_delete(request):
 
 def cart_update(request):
     pass
+
+
+def order_summary(request):
+
+    # Placeholder. Make sure users are authenticated before running code.
+    if not request.user.is_authenticated:
+        return render(request, 'error.html', {'error_code': 401, 'error_description': 'Unauthenticated.', 'lead_text': 'Unable to access this page while not logged in.'})
+
+    # Get cart
+    cart = Cart(request)
+    items = cart.item()
+    products_out_of_stock = []
+    products_in_stock = []
+
+    # Format of items:
+    #{'1': {'product': '1', 'qty': '2'}, '5': {'product': '5', 'qty': '1'}}
+
+    print("Order summary:")
+    print(items)
+
+    # Check for any products that are out of stock
+    for x in items:
+        prod_id = items[x].get('product')
+        prod_qty = items[x].get('qty')
+
+        prod = Product.objects.get(pk=int(prod_id))
+
+        available = prod.nr_available - int(prod_qty)
+
+        if available < 0:
+            products_out_of_stock.append(prod)
+        else:
+            products_in_stock.append(prod)
+
+    nr_out_of_stock = len(products_out_of_stock)
+
+    # Show error page if product is out of stock
+    if nr_out_of_stock > 0:
+        lead_insert = ""
+        for prod in products_out_of_stock:
+            lead_insert = f"{lead_insert}, {prod.name}"
+            if lead_insert[:1] == ",":
+                lead_insert = lead_insert[2:]
+            lead_text = "The following product(s) were out of stock: " + lead_insert
+        return render(request, 'error.html', {'error_code': 404, 'error_description': 'Products were out of stock.', 'lead_text': lead_text})
+
+    # Some variables
+    price_sum = 0
+    current_user = request.user
+    time = datetime.datetime.now()
+
+    # Reduce products in stock
+    for x in items:
+        prod_id = items[x].get('product')
+        prod_qty = items[x].get('qty')
+
+        prod = Product.objects.get(pk=int(prod_id))
+        prod.nr_available = prod.nr_available - int(prod_qty)
+        prod.save()
+
+        # Add to sum
+        price_sum = price_sum + int(prod.price)
+
+    # Create order
+    o = Order(user_id=current_user, order_date=time, total_price=price_sum)
+    o.save()
+
+    # Create order details
+    for x in items:
+        prod_id = items[x].get('product')
+        prod_qty = items[x].get('qty')
+
+        # Only get products in stock
+        for p in products_in_stock:
+            if int(prod_id) == p.product_id:
+                corresponding_prod = p
+                od = Order_Detail(order_id=o, product_id=corresponding_prod, quantity=int(prod_qty))
+                od.save()
+
+    return render(request, 'order_summary.html')
