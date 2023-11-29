@@ -109,8 +109,9 @@ def cart_add(request):
     cart = Cart(request)
     if request.POST.get('action') =='post':
         product_id = int(request.POST.get('product_id'))
+        product_qty = int(request.POST.get('product_qty'))
         product = get_object_or_404(Product, product_id=product_id)
-        cart.add(product=product)
+        cart.add(product=product,product_qty=product_qty)
         
         cart_quantity = cart.__len__()
         response = JsonResponse({'qty:':cart_quantity})
@@ -121,18 +122,28 @@ def cart_summary(request):
     cart = Cart(request)
     items = cart.item()
     product_list = []
+    product_qty = []
+    final = []
     item_list = []
+    
     total = 0
-    product = Product.objects.all()
-
+    
     for x in items:
-        product_list.append(*items[x].values())
-    for p in product:
-        if p.name in product_list:
-           item_list.append({'name':p.name,'img':p.img.url,'price':str(p.price).replace(".", ":")})
-           total=total+p.price
-          
-    return render(request,'cart_summary.html',{'items':item_list,'total':total})
+        temp = items[x].get('product')
+        qty = items[x].get('qty')
+        product_list.append(temp)
+        product_qty.append(qty)
+   
+    print(product_qty)
+    for p in product_list:
+        item_list.append(Product.objects.get(pk=p))
+        
+    for x,y in zip(item_list,product_qty):
+        final.append({'id':x.pk,'name':x.name,'img': "img/" + x.img.url,'price': str(x.price).replace(".", ":"),'quantity':y})
+        total=total+x.price 
+
+     
+    return render(request,'cart_summary.html',{'items':final,'total':total})
 
 def cart_delete(request):
     pass
