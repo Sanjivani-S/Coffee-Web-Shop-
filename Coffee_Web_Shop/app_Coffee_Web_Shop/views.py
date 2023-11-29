@@ -128,6 +128,7 @@ def cart_summary(request):
     
     total = 0
     
+    print(items)
     for x in items:
         temp = items[x].get('product')
         qty = items[x].get('qty')
@@ -142,7 +143,9 @@ def cart_summary(request):
         final.append({'id':x.pk,'name':x.name,'img': "img/" + x.img.url,'price': str(x.price).replace(".", ":"),'quantity':y})
         total=total+x.price 
 
-     
+#    for x in item_list:
+#        final.append({'id':x.pk,'name':x.name,'img': "img/" + x.img.url,'price': str(x.price).replace(".", ":")})
+#    print(item_list)
     return render(request,'cart_summary.html',{'items':final,'total':total})
 
 def cart_delete(request):
