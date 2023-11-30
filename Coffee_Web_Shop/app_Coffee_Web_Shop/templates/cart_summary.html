@@ -25,38 +25,38 @@
                         <div class="row d-flex justify-content-between align-items-center">
                             <div class="col-md-2 col-lg-2 col-xl-2">
 
+                                <img src="{% static product.img %}" class="img-fluid rounded-3" alt="{{ product.name }}">
 
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="lead fw-normal mb-2">{{ product.name }}</p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                <p class="lead fw-normal mb-2">{{ product.name }}</p>
 
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                             <i class="fas fa-minus"></i>
                           </button>
-          
-                          <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number"
-                            class="form-control form-control-sm update-qty-{{ product.id }}" />
-          
-                          <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+
+                                <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number" class="form-control form-control-sm update-qty-{{ product.id }}" />
+
+                                <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                             <i class="fas fa-plus"></i>
                           </button>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0" id="price">SEK {{ product.price}}</h5>
-                                </div>
-
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg">X</i></a>
-                                </div>
-
                             </div>
                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                <h5 class="mb-0" id="price" type="number" step="any">SEK {% widthratio product.quantity 1 product.price %}</h5>
+                                <h5 class="mb-0" id="price">SEK {{ product.price}}</h5>
                             </div>
+
                             <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                <button class="btn brn-sm btn-success update-item" id="update-cart-{{ product.id }}" data-item="{{ product.id }}" value="{{ product.id }}">Update</a>
+                                <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg">X</i></a>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                            <h5 class="mb-0" id="price" type="number" step="any">SEK {% widthratio product.quantity 1 product.price %}</h5>
+                        </div>
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                            <button class="btn brn-sm btn-success update-item" id="update-cart-{{ product.id }}" data-item="{{ product.id }}" value="{{ product.id }}">Update</a>
                         </div>                      
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                           <button class="btn brn-sm btn-danger " id="delete-cart-{{ product.id }}" value="{{ product.id }}">Remove</a>
@@ -79,12 +79,12 @@
                     <a href="{% url 'order_summary' %}" class="btn btn-outline-dark btn-lg">Place order</a>
                   {% else %}
                       <button class="btn btn-outline-dark btn-lg" disabled>Login required for placing order</button> {% endif %}
-                            </div>
-
-
                         </div>
+
+
                     </div>
                 </div>
+            </div>
 
 </section>
 <!-- update/delete item in cart -->
@@ -115,31 +115,30 @@
             }
         });
     });
-    $(document).ready(function() {
 
-                $(document).on('click', '.btn-danger', function(e) {
-                    e.preventDefault();
-                    productId = $(this).attr('id').replace('delete-cart-', '');
-                    $.ajax({
-                        type: 'POST',
-                        url: '{% url '
-                        cart_delete ' %}',
-                        data: {
-                            product_id: productId,
-                            //product_qty:$('#form1').val(),
-                            csrfmiddlewaretoken: '{{ csrf_token }}',
-                            action: 'post'
+    $(document).on('click', '.btn-danger', function(e) {
+        e.preventDefault();
+        productId = $(this).attr('id').replace('delete-cart-', '');
+        $.ajax({
+            type: 'POST',
+            url: '{% url '
+            cart_delete ' %}',
+            data: {
+                product_id: productId,
+                //product_qty:$('#form1').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
 
-                        },
-                        success: function(json) {
-                            console.log(json)
-                            location.reload(true)
-                            document.getElementById("cart_quantity").textContent = json.qty
-                        },
-                        error: function(xhr, errmsg, err) {
+            },
+            success: function(json) {
+                console.log(json)
+                location.reload(true)
+                document.getElementById("cart_quantity").textContent = json.qty
+            },
+            error: function(xhr, errmsg, err) {
 
-                        }
-                    });
-                })
+            }
+        });
+    })
 </script>
 {% endblock %}
