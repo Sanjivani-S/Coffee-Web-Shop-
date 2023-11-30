@@ -1,65 +1,71 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} {% load static %} {% block content %}
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Cart Summary</h1>
+            <br>
 
-{% block content %}
-        <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Cart Summary</h1>
-                    <br>
-                   
+        </div>
+    </div>
+</header>
+<section class="h-100" style="background-color: #eee;">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-normal mb-0 text-dark">Shopping Cart</h3>
+
                 </div>
-            </div>
-        </header>
-              
+                {% for product in items %}
 
-        <section class="h-100" style="background-color: #eee;">
-            <div class="container h-100 py-5">
-              <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-10">
-                    
-                  <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
-                    
-                  </div>
-                  {% for product in items %} 
-                   
-                  <div class="card rounded-3 mb-4">
-                    <div class="card-body p-4">
-                      <div class="row d-flex justify-content-between align-items-center">
-                        <div class="col-md-2 col-lg-2 col-xl-2">
-                            
-                          <img
-                            src="{% static product.img %}"
-                            class="img-fluid rounded-3" alt="{{ product.name }}">
-                            
-                        </div>
+                <section class="h-100" style="background-color: #eee;">
+                    <div class="container h-100 py-5">
+                        <div class="row d-flex justify-content-center align-items-center h-100">
+                            <div class="col-10">
 
-                         
-                        <div class="col-md-3 col-lg-3 col-xl-3">
-                          <p class="lead fw-normal mb-2" >{{ product.name }}</p>
-                          
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                          <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+
+                                </div>
+                                {% for product in items %}
+
+                                <div class="card rounded-3 mb-4">
+                                    <div class="card-body p-4">
+                                        <div class="row d-flex justify-content-between align-items-center">
+                                            <div class="col-md-2 col-lg-2 col-xl-2">
+
+
+                                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                                    <p class="lead fw-normal mb-2">{{ product.name }}</p>
+
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                             <i class="fas fa-minus"></i>
                           </button>
-          
-                          <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number"
-                            class="form-control form-control-sm update-qty-{{ product.quantity }}" />
-          
-                          <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+
+                                                    <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number" class="form-control form-control-sm update-qty-{{ product.quantity }}" />
+
+                                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                             <i class="fas fa-plus"></i>
                           </button>
-                        </div>
-                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                          <h5 class="mb-0" id="price" type="number" step="any">SEK {% widthratio product.quantity 1 product.price %}</h5>
-                        </div>
-                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                          <button class="btn brn-sm btn-success update-item" id="update-cart-{{ product.id }}" data-item="{{ product.id }}" value="{{ product.id }}">Update</a>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                    <h5 class="mb-0" id="price">SEK {{ product.price}}</h5>
+                                                </div>
+
+                                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                    <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg">X</i></a>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                <h5 class="mb-0" id="price" type="number" step="any">SEK {% widthratio product.quantity 1 product.price %}</h5>
+                                            </div>
+                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                <button class="btn brn-sm btn-success update-item" id="update-cart-{{ product.id }}" data-item="{{ product.id }}" value="{{ product.id }}">Update</a>
                         </div>                      
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                           <button class="btn brn-sm btn-danger " id="delete-cart-{{ product.id }}" value="{{ product.id }}">Remove</a>
@@ -77,70 +83,72 @@
                  </div>
                  </div>
                  </div>
-                 </section>
-                              
-                  
-                        
-                
-<!-- update/delete item in cart -->
- <script>
-    $(document).on('click','.btn-success', function(e){
-                e.preventDefault();
-                var _pId = $(this).attr('data-item');
-                var _pQty=$(".update-qty-"+_pId).val()
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url 'cart_update' %}',
-                    data: {
-                        product_id: _pId,
-                        product_qty: _pQty,
-                        csrfmiddlewaretoken: '{{ csrf_token }}',
-                        action: 'post'
-
-                    },
-                    cache: false, 
-                    success: function(json){
-                        console.log(json)
-                        $('#form1-' + productId).val(json.qty)
-                    },
-                    error: function(xhr, errmsg, err){
-
-                    }
-                });
-            });
-            $(document).ready(function () {
-
-            $(document).on('click','.btn-danger', function(e){
-                e.preventDefault();
-                productId = $(this).attr('id').replace('delete-cart-', '');
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url 'cart_delete' %}',
-                    data: {
-                        product_id: productId,
-                        //product_qty:$('#form1').val(),
-                        csrfmiddlewaretoken: '{{ csrf_token }}',
-                        action: 'post'
-
-                    },
-                    success: function(json){
-                        console.log(json)
-                        location.reload(true)
-                        document.getElementById("cart_quantity").textContent = json.qty
-                    },
-                    error: function(xhr, errmsg, err){
-
-                    }
-                });
-            })
-
- </script> 
-  
+                 <div class="text-center">
+                  {% if user.is_authenticated %}
+                    <a href="{% url 'order_summary' %}" class="btn btn-outline-dark btn-lg">Place order</a>
+                  {% else %}
+                      <button class="btn btn-outline-dark btn-lg" disabled>Login required for placing order</button> {% endif %}
+                                            </div>
 
 
-    
-{% endblock %}
+                                        </div>
+                                    </div>
+                                </div>
 
+                </section>
+                <!-- update/delete item in cart -->
+                <script>
+                    $(document).on('click', '.btn-success', function(e) {
+                        e.preventDefault();
+                        var _pId = $(this).attr('data-item');
+                        var _pQty = $(".update-qty-" + _pId).val()
 
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url '
+                            cart_update ' %}',
+                            data: {
+                                product_id: _pId,
+                                product_qty: _pQty,
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                                action: 'post'
 
+                            },
+                            cache: false,
+                            success: function(json) {
+                                console.log(json)
+                                $('#form1-' + productId).val(json.qty)
+                            },
+                            error: function(xhr, errmsg, err) {
+
+                            }
+                        });
+                    });
+                    $(document).ready(function() {
+
+                                $(document).on('click', '.btn-danger', function(e) {
+                                    e.preventDefault();
+                                    productId = $(this).attr('id').replace('delete-cart-', '');
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '{% url '
+                                        cart_delete ' %}',
+                                        data: {
+                                            product_id: productId,
+                                            //product_qty:$('#form1').val(),
+                                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                                            action: 'post'
+
+                                        },
+                                        success: function(json) {
+                                            console.log(json)
+                                            location.reload(true)
+                                            document.getElementById("cart_quantity").textContent = json.qty
+                                        },
+                                        error: function(xhr, errmsg, err) {
+
+                                        }
+                                    });
+                                })
+                </script>
+                {% endblock %}
