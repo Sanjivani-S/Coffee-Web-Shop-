@@ -22,7 +22,7 @@ def shop(request):
                 "id": p.pk,
                 "name": p.name,
                 "img": "img/" + p.img.url,
-                "price": str(p.price).replace(".", ":"),
+                "price": p.price,
             }
         )
     return render(request, "shop.html", {"products": display_products})
@@ -81,7 +81,7 @@ def product_detail(request, id):
         "id": product.pk,
         "name": product.name,
         "img": "img/" + product.img.url,
-        "price": str(product.price).replace(".", ":"),
+        "price": product.price,
         "description": product.description,
     }
 
@@ -95,7 +95,7 @@ def product_detail(request, id):
                     "id": p.pk,
                     "name": p.name,
                     "img": "img/" + p.img.url,
-                    "price": str(p.price).replace(".", ":"),
+                    "price": p.price,
                 }
             )
 
@@ -165,17 +165,18 @@ def cart_summary(request):
         product_list.append(temp)
         product_qty.append(qty)
 
-    #print(product_qty)
+    
     for p in product_list:
         item_list.append(Product.objects.get(pk=p))
 
     for x, y in zip(item_list, product_qty):
+        print(x.price)
         final.append(
             {
                 "id": x.pk,
                 "name": x.name,
                 "img": "img/" + x.img.url,
-                "price": x.price,
+                "price": int(y) * float(x.price),
                 "quantity": y,
             }
         )
