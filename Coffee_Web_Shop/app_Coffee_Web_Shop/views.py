@@ -165,7 +165,7 @@ def cart_summary(request):
         product_list.append(temp)
         product_qty.append(qty)
 
-    print(product_qty)
+    #print(product_qty)
     for p in product_list:
         item_list.append(Product.objects.get(pk=p))
 

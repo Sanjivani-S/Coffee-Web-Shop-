@@ -34,10 +34,12 @@
                                     <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                             <i class="fas fa-minus"></i>
                           </button>
-
-                                    <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number" class="form-control form-control-sm update-qty-{{ product.quantity }}" />
-
-                                    <button class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+          
+                          <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number"
+                            class="form-control form-control-sm update-qty-{{ product.id }}" />
+          
+                          <button class="btn btn-link px-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                             <i class="fas fa-plus"></i>
                           </button>
                                 </div>
