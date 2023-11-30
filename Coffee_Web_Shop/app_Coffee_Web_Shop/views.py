@@ -75,7 +75,7 @@ def product_detail(request, id):
         product = Product.objects.get(pk=id)
     except Product.DoesNotExist:
         product = None
-        return render(request, "error.html")
+        return render(request, 'error.html', {'error_code': "404", 'error_description': "Page not found.", "lead_text": "The page you’re looking for doesn’t exist."})
 
     display_product = {
         "id": product.pk,
