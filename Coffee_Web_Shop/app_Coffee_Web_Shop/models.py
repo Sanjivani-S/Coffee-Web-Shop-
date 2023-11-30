@@ -23,7 +23,7 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     
     def __str__(self) -> str:
-        return self.order_id
+        return str(self.order_id)
 
 ## This is class for Order-Details table. It connects to Orders, Product tables/classes
 class Order_Detail(models.Model):
@@ -33,6 +33,6 @@ class Order_Detail(models.Model):
     quantity = models.IntegerField(blank=False, default=0)
 
     def __str__(self) -> str :
-        return self.o_details_id
+        return str(self.o_details_id)
     
 

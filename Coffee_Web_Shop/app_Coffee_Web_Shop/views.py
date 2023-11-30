@@ -196,60 +196,20 @@ def cart_delete(request):
         return HttpResponseRedirect(reverse("cart_summary"))
 
 
+
 def cart_update(request):
     cart = Cart(request)
     if request.POST.get("action") == "post":
         product_id = int(request.POST.get("product_id"))
-        product_qty_str = request.POST.get("product_qty")
-        print(product_id)
-        print(product_qty_str)
-        """
-        # product_qty = int(request.POST.get('product_qty'))
+        product_qty = request.POST.get("product_qty")
         product = get_object_or_404(Product, product_id=product_id)
-
+        print(product_qty)
+        print(product_id)
         cart.update(product=product, product_qty=product_qty)
-
-        cart_quantity = cart.__len__()
-        response = JsonResponse({"qty": cart_quantity})
+        
         # response = JsonResponse({'Product Name:':product.name})
-        return response
-        """
-        if product_qty_str is not None and product_qty_str.isdigit():
-            product_qty = int(product_qty_str)
-            cart.update(product=product_id, product_qty=product_qty)
+        return render(request, 'cart_summary.html')
 
-            cart_quantity = cart.__len__()
-            response = JsonResponse({'qty': cart_quantity})
-            return response
-        else:
-            # Handle the case where product_qty_str is not a valid integer or is None
-            return JsonResponse({'error': 'Invalid product quantity'})
-
-    return JsonResponse({'error': 'Invalid request'})
-
-
-
-"""   
-def cart_update(request):
-    cart = Cart(request)
-    if request.POST.get('action') == 'post':
-        product_id = int(request.POST.get('product_id'))
-        product_qty_str = request.POST.get('product_qty')
-
-        # Check if product_qty_str is not None before converting to int
-        if product_qty_str is not None:
-            product_qty = int(product_qty_str)
-            product = get_object_or_404(Product, product_id=product_id)
-        
-            cart.update(product=product, product_qty=product_qty)
-        
-            cart_quantity = cart.__len__()
-            response = JsonResponse({'qty': cart_quantity})
-            return response
-
-    # Handle the case where 'action' is not 'post'
-    return JsonResponse({'error': 'Invalid request'})
-"""
 
 def order_summary(request):
 
@@ -294,6 +254,7 @@ def order_summary(request):
                 lead_insert = lead_insert[2:]
             lead_text = "The following product(s) were out of stock: " + lead_insert
         return render(request, 'error.html', {'error_code': 404, 'error_description': 'Products were out of stock.', 'lead_text': lead_text})
+    
 
     # Some variables
     price_sum = 0
@@ -327,5 +288,8 @@ def order_summary(request):
                 corresponding_prod = p
                 od = Order_Detail(order_id=o, product_id=corresponding_prod, quantity=int(prod_qty))
                 od.save()
+                
 
+    for p in products_in_stock:
+        cart.remove(p)
     return render(request, 'order_summary.html')

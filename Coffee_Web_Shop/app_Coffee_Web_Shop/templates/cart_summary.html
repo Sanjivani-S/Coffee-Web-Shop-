@@ -47,7 +47,7 @@
                             <i class="fas fa-minus"></i>
                           </button>
           
-                          <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number"
+                          <input id="update-qty" class="product-qty-{{product.id}}" min="1" name="product_qty" value="{{ product.quantity }}" type="number"
                             class="form-control form-control-sm update-qty-{{ product.id }}" />
           
                           <button class="btn btn-link px-2"
@@ -59,7 +59,7 @@
                           <h5 class="mb-0" id="price" type="number" step="any">SEK {% widthratio product.quantity 1 product.price %}</h5>
                         </div>
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                          <button class="btn brn-sm btn-success update-item" id="update-cart-{{ product.id }}" data-item="{{ product.id }}" value="{{ product.id }}">Update</a>
+                          <button class="btn brn-sm btn-success update-item" id="update-cart-{{ product.id }}" data-item="{{ product.id }}" >Update</a>
                         </div>                      
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                           <button class="btn brn-sm btn-danger " id="delete-cart-{{ product.id }}" value="{{ product.id }}">Remove</a>
@@ -97,29 +97,28 @@
  <script>
     $(document).on('click','.btn-success', function(e){
                 e.preventDefault();
-                var _pId = $(this).attr('data-item');
-                var _pQty=$(".update-qty-"+_pId).val()
-                
+                productId = $(this).attr('id').replace('update-cart-', '');
+                productqty = $(".product-qty-"+productId).val();
                 $.ajax({
                     type: 'POST',
                     url: '{% url 'cart_update' %}',
                     data: {
-                        product_id: _pId,
-                        product_qty: _pQty,
+                        product_id: productId,
+                        product_qty: productqty,
                         csrfmiddlewaretoken: '{{ csrf_token }}',
                         action: 'post'
 
                     },
-                    cache: false, 
                     success: function(json){
                         console.log(json)
-                        $('#form1-' + productId).val(json.qty)
+                        location.reload(true)
+                        //document.getElementById("cart_quantity").textContent = json.qty
                     },
                     error: function(xhr, errmsg, err){
 
                     }
                 });
-            });
+            })
             
 
     $(document).on('click','.btn-danger', function(e){

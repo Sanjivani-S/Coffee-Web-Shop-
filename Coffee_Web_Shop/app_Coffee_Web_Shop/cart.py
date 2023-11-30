@@ -38,9 +38,7 @@ class Cart:
         product_id = str(product.product_id)
 
         if product_id in self.cart:
-            self.cart[product_id] = str(product_qty)
-            #self.cart[product_id]= {'product':str(product.product_id),'qty':str(product_qty)}
-        #else:
-        #    self.cart[product_id] = {"product": str(product.qty)}
-        #    self.cart[product_id]= {'product':str(product.product_id),'qty':str(product_qty)}
-        self.session.modified = True 
+            print("success")
+            self.cart[product_id]= {'product':str(product.product_id),'qty':str(product_qty)}
+            print(self.cart)
+        self.session.modified = True
