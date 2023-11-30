@@ -24,7 +24,7 @@
                     
                   </div>
                   {% for product in items %} 
-                  
+                   
                   <div class="card rounded-3 mb-4">
                     <div class="card-body p-4">
                       <div class="row d-flex justify-content-between align-items-center">
@@ -38,7 +38,7 @@
 
                          
                         <div class="col-md-3 col-lg-3 col-xl-3">
-                          <p class="lead fw-normal mb-2">{{ product.name }}</p>
+                          <p class="lead fw-normal mb-2" >{{ product.name }}</p>
                           
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -47,8 +47,8 @@
                             <i class="fas fa-minus"></i>
                           </button>
           
-                          <input id="form1" min="0" name="quantity" value="{{ product.quantity }}" type="number"
-                            class="form-control form-control-sm" />
+                          <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number"
+                            class="form-control form-control-sm update-qty-{{ product.quantity }}" />
           
                           <button class="btn btn-link px-2"
                             onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
@@ -56,33 +56,91 @@
                           </button>
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                          <h5 class="mb-0" id="price">SEK {{ product.price}}</h5>
+                          <h5 class="mb-0" id="price" type="number" step="any">SEK {% widthratio product.quantity 1 product.price %}</h5>
                         </div>
-                                               
                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                          <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg">X</i></a>
+                          <button class="btn brn-sm btn-success update-item" id="update-cart-{{ product.id }}" data-item="{{ product.id }}" value="{{ product.id }}">Update</a>
+                        </div>                      
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                          <button class="btn brn-sm btn-danger " id="delete-cart-{{ product.id }}" value="{{ product.id }}">Remove</a>
                         </div>
                         
                       </div>
                     </div>
                   </div>
                   {% endfor %}
-                  
                   <div class="card rounded-3 mb-4">
-                    <div class="card-body p-4">
-                      <div class="sum_right">
+                   <div class="card-body p-4">
+                     <div class="sum_right">
+                       
+                       <h5>Total: {{ total }} SEK</h5>      
+                 </div>
+                 </div>
+                 </div>
+                 </section>
+                              
+                  
                         
-                        <h5>Total: {{ total }} SEK</h5>
-                        
-                </div>
-            </div>
-        </div>
-    </section>
+                
+<!-- update/delete item in cart -->
+ <script>
+    $(document).on('click','.btn-success', function(e){
+                e.preventDefault();
+                var _pId = $(this).attr('data-item');
+                var _pQty=$(".update-qty-"+_pId).val()
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'cart_update' %}',
+                    data: {
+                        product_id: _pId,
+                        product_qty: _pQty,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+
+                    },
+                    cache: false, 
+                    success: function(json){
+                        console.log(json)
+                        $('#form1-' + productId).val(json.qty)
+                    },
+                    error: function(xhr, errmsg, err){
+
+                    }
+                });
+            });
+            $(document).ready(function () {
+
+            $(document).on('click','.btn-danger', function(e){
+                e.preventDefault();
+                productId = $(this).attr('id').replace('delete-cart-', '');
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'cart_delete' %}',
+                    data: {
+                        product_id: productId,
+                        //product_qty:$('#form1').val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+
+                    },
+                    success: function(json){
+                        console.log(json)
+                        location.reload(true)
+                        document.getElementById("cart_quantity").textContent = json.qty
+                    },
+                    error: function(xhr, errmsg, err){
+
+                    }
+                });
+            })
+
+ </script> 
   
-
-        
-
 
 
     
 {% endblock %}
+
+
+
