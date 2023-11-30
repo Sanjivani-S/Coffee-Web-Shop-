@@ -24,3 +24,23 @@ class Cart:
 
     def item(self):
         return self.cart
+    
+    def remove(self, product):
+        product_id = str(product.product_id)
+        #print(product_id)
+        if product_id in self.cart:
+            
+            del self.cart[product_id]
+            
+        self.session.modified = True    
+
+    def update(self, product, product_qty):
+        product_id = str(product.product_id)
+
+        if product_id in self.cart:
+            self.cart[product_id] = str(product_qty)
+            #self.cart[product_id]= {'product':str(product.product_id),'qty':str(product_qty)}
+        #else:
+        #    self.cart[product_id] = {"product": str(product.qty)}
+        #    self.cart[product_id]= {'product':str(product.product_id),'qty':str(product_qty)}
+        self.session.modified = True 
