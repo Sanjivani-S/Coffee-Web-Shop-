@@ -48,7 +48,7 @@
                           </button>
           
                           <input id="update-qty-{{ product.quantity }}" min="1" name="product_qty" value="{{ product.quantity }}" type="number"
-                            class="form-control form-control-sm update-qty-{{ product.quantity }}" />
+                            class="form-control form-control-sm update-qty-{{ product.id }}" />
           
                           <button class="btn btn-link px-2"
                             onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
@@ -109,9 +109,9 @@
                     }
                 });
             });
-            $(document).ready(function () {
+            
 
-            $(document).on('click','.btn-danger', function(e){
+    $(document).on('click','.btn-danger', function(e){
                 e.preventDefault();
                 productId = $(this).attr('id').replace('delete-cart-', '');
                 $.ajax({
@@ -135,12 +135,5 @@
                 });
             })
 
- </script> 
-  
-
-
-    
+ </script>  
 {% endblock %}
-
-
-
