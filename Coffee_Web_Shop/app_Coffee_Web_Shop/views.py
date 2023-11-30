@@ -155,7 +155,7 @@ def cart_summary(request):
     product_qty = []
     final = []
     item_list = []
-
+    totalP = 0
     total = 0
 
     #print(items)
@@ -176,11 +176,12 @@ def cart_summary(request):
                 "id": x.pk,
                 "name": x.name,
                 "img": "img/" + x.img.url,
-                "price": int(y) * float(x.price),
+                "price": round((int(y) * float(x.price)),2),
                 "quantity": y,
             }
         )
-        total += int(y) * float(x.price)
+        totalP += (int(y) * float(x.price))
+        total = round(totalP, 2)
         # print(float(x.price))
 
     return render(request, "cart_summary.html", {"items": final, "total": total})
