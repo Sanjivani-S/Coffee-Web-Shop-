@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
+def error(request):
+    return render(request, 'error.html', {'error_code': "404", 'error_description': "Page not found.", "lead_text": "The page you’re looking for doesn’t exist."})
 
 def shop(request):
     products = Product.objects.order_by("nr_available")
@@ -132,15 +134,6 @@ def register(request):
         request, "registration.html", {"regform": regform, "registered": registered}
     )
 
-
-def error(request):
-<<<<<<< HEAD
-    return render(request, "error.html")
-
-=======
-    return render(request, 'error.html', {'error_code': "404", 'error_description': "Page not found.", "lead_text": "The page you’re looking for doesn’t exist."})
->>>>>>> Orders
-
 def cart_add(request):
     cart = Cart(request)
     if request.POST.get("action") == "post":
@@ -204,7 +197,6 @@ def cart_delete(request):
 
 
 def cart_update(request):
-<<<<<<< HEAD
     cart = Cart(request)
     if request.POST.get("action") == "post":
         product_id = int(request.POST.get("product_id"))
@@ -258,9 +250,6 @@ def cart_update(request):
     # Handle the case where 'action' is not 'post'
     return JsonResponse({'error': 'Invalid request'})
 """
-=======
-    pass
-
 
 def order_summary(request):
 
@@ -340,4 +329,3 @@ def order_summary(request):
                 od.save()
 
     return render(request, 'order_summary.html')
->>>>>>> Orders
